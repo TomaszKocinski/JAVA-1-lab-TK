@@ -48,26 +48,53 @@ public class Laboratorium1 {
 
     public static double sin(double arg) {
         double temp = 0;
-        for (int i = 1; i < 8; i++) {
-            double down,right = 1;
-            int up;
+        boolean underZero = false,negative=false;
+        if (arg < 0) {
+            underZero = true;
+        }
+        arg=abs(arg);
+        while (arg >= 2*Math.PI) {
+            arg = arg - 2*Math.PI;
+        }
+        if (arg >= Math.PI) {
+            negative = true;
+            arg = 2*Math.PI - arg;
+        }
+        if(arg>Math.PI / 2.0){
+           arg=Math.PI-arg; 
+        }
+        System.out.println(arg);
+        //Math.toDegrees(arg);
+
+        for (double i = 1; i < 8; i++) {
+            double down, right, up;
             if ((i + 1) % 2 == 0) {
                 up = 1;
             } else {
                 up = -1;
             }
-            down = silnia(2* i - 1);
-            for (int j = 0; j < 2 * i - 1; j++) {
-                right = right * arg;
-            }
+            int tempor = 2 * (int) i - 1;
+            down = silnia(tempor);
+            right = Math.pow(arg, tempor);
             temp = temp + ((up / down) * right);
             // temp=Math.floor(temp*1000000)/1000000;
         }
-        return temp;
+
+        if ((underZero && !negative) || (!underZero && negative)) {
+            return -temp;
+        } else {
+            return temp;
+        }
     }
 
     public static void main(String[] args) { 
-        System.out.println(sin(Math.PI));
+        System.out.println(sin(-(Math.PI*5+Math.PI/3)));
+        
+        
+        
+        
+        
+        /* System.out.println(sin(2*Math.PI));
         System.out.println(Math.sin(Math.PI)); // to jest strasznie mala wartosc, zapis naukowy (E-16), blisko zera
         // 0.0
         System.out.println(sin(0.0));
@@ -77,7 +104,7 @@ public class Laboratorium1 {
         System.out.println(Math.sin(Math.PI / 2.0));
         //1.0
         System.out.println(sin(0.5));
-        System.out.println(Math.sin(0.5));
+        System.out.println(Math.sin(0.5));*/
         // assertEquals(Math.sin(0.5), r, 0.000001);
     }
 }
